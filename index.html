@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Sayago 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2b0033, #000);
+  overflow-x: hidden;
+  font-family: 'Quicksand', sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CORAZONES FLOTANDO */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  color: pink;
+  font-size: 20px;
+  animation: float 10s linear infinite;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+}
+
+/* TARJETA */
+.card {
+  width: 98%;
+  max-width: 1200px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 45px;
+  padding: 55px 40px;
+  text-align: center;
+  box-shadow: 0 0 70px rgba(255,105,180,0.45);
+  animation: fadeIn 1.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.4rem;
+  margin-bottom: 25px;
+}
+
+p {
+  font-size: 1.6rem;
+  line-height: 1.9;
+}
+
+.counter {
+  margin: 35px 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffc1ff;
+}
+
+/* VIDEO */
+.video-box {
+  margin: 40px auto;
+  width: 100%;
+  max-width: 750px;
+  aspect-ratio: 16 / 9;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(255,105,180,0.9);
+  animation: fadeIn 2s ease;
+}
+
+.video-box iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* GALERÍA */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  margin-top: 45px;
+}
+
+.photo-box {
+  background: rgba(255,255,255,0.15);
+  border-radius: 25px;
+  padding: 12px;
+  cursor: pointer;
+  animation: floatPhoto 4s ease-in-out infinite;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.photo-box:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 40px rgba(255,182,193,0.9);
+}
+
+@keyframes floatPhoto {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.photo-box img {
+  width: 100%;
+  border-radius: 18px;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal img {
+  max-width: 96%;
+  max-height: 96%;
+  border-radius: 28px;
+  box-shadow: 0 0 55px rgba(255,105,180,1);
+}
+
+.modal.show { display: flex; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Para Sayago 💖</h1>
+
+  <p>
+    En las buenas y las malas seguimos.<br>
+    Que vengan muchas buenas 🌠<br><br>
+    Gracias por todo.<br>
+    <strong>Te amo Sayago</strong>
+  </p>
+
+  <div class="counter" id="counter"></div>
+
+  <!-- VIDEO EMBEBIDO -->
+  <div class="video-box">
+    <iframe
+      src="https://www.youtube.com/embed/7pzb-3YE7C4"
+      title="Sin Ti - Runaway"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- GALERÍA (usá tus nombres reales) -->
+  <div class="gallery">
+    <div class="photo-box"><img src="images/1000812807.jpg" onclick="openModal(this.src)"></div>
+    <div class="photo-box"><img src="images/1000812819.jpg" onclick="openModal(this.src)"></div>
+    <div class="photo-box"><img src="images/1000812822.jpg" onclick="openModal(this.src)"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <img id="modalImg">
+</div>
+
+<script>
+/* MODAL */
+function openModal(src) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+/* CONTADOR */
+const startDate = new Date(2016, 11, 14);
+function updateCounter() {
+  const now = new Date();
+  let years = now.getFullYear() - startDate.getFullYear();
+  let months = now.getMonth() - startDate.getMonth();
+  if (months < 0) { years--; months += 12; }
+  document.getElementById("counter").textContent =
+    `${years} años y ${months} meses juntos 💞`;
+}
+updateCounter();
+
+/* CORAZONES */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (16 + Math.random() * 26) + "px";
+  heart.style.animationDuration = (8 + Math.random() * 6) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 12000);
+}, 350);
+</script>
+
+</body>
+</html>
